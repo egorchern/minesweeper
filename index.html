@@ -36,20 +36,23 @@
                 <form>
                       <div class="form-group">
                         
-                        <input type="text" class="form-control" id="width_field" placeholder="Width" >
+                        <input type="text" class="form-control" id="width_field" placeholder="Width (max: 99)" >
                         
                       </div>
                       <div class="form-group">
                         
-                        <input type="text" class="form-control" id="height_field" placeholder="Height">
+                        <input type="text" class="form-control" id="height_field" placeholder="Height (max: 99)">
                           
                       </div>
                       <div class="form-group">
                           
-                        <input type="text" class="form-control" id="mine_count" placeholder="Mine count">
+                        <input type="text" class="form-control" id="mine_count" placeholder="Mine count (max: width * height)">
                         
                       </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <div class="horizontalAlign">
+                          <button type="button" id="custom_field_submit" class="btn btn-primary" >Submit</button>
+                      </div>
+                      
                 </form>
                 
                 

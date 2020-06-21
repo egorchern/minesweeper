@@ -42,7 +42,6 @@ body {
 
 .modall-content {
   margin-top: 20vh;
-  font-size: 1.5rem;
   width: 80%;
   max-width: 500px;
   background-color: white;
@@ -50,8 +49,16 @@ body {
   animation-name: zoom;
   animation-duration: 0.5s;
 }
+.modall-content input {
+  font-size: 1.5rem;
+}
 .modall-content form {
   padding: 20px;
+}
+.modall-content form button {
+  font-size: 1.5rem;
+  width: 150px;
+  border-radius: 20px;
 }
 
 @keyframes zoom {
@@ -76,6 +83,13 @@ body {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
+}
+
+.horizontalAlign {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=Main.css.map */
