@@ -78,5 +78,30 @@ function configure_and_display_field(){
         }
         field.push(currentRow);
     }
-    console.log(field);
+    var dim_x = size_x * 30;
+    var dim_y = size_y * 30;
+    $('#field_container').css({
+        
+        "width" : String(dim_x),
+        "height" : String(dim_y)
+        }
+        
+    )
+    $('#field_container_background').css({
+        "width" : String(dim_x + 30),
+        "height" : String(dim_y + 30)
+    })
+    for (var i = 0; i < size_x * size_y; i++){
+        $('#field_container').append(`
+        <img src="Assets/Empty_square3dd.png" id=${i} ">
+        `);
+    }
+    $('#field_container img').hover(function(){
+        $('#' + this.id).attr("src","Assets/disabled_square.png")
+        
+    }, function(){
+        $('#' + this.id).attr("src","Assets/Empty_square3dd.png")
+    })
+    $('#field_container_background').css("display","flex");
+    
 }

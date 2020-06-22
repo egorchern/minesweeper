@@ -18,7 +18,8 @@
 }
 
 body {
-  overflow-x: hidden;
+  margin: 0;
+  overflow-x: auto;
   overflow-y: auto;
   background-color: #fefefe;
 }
@@ -90,6 +91,19 @@ body {
   width: 100%;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
+}
+
+#field_container {
+  font-size: 0;
+}
+
+#field_container_background {
+  background-image: url(Assets/background.png);
+  background-repeat: repeat;
+  display: none;
+  animation-name: zoom;
+  animation-duration: 0.5s;
 }
 
 /*# sourceMappingURL=Main.css.map */
