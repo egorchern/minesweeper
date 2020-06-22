@@ -91,6 +91,7 @@ function configure_and_display_field(){
         "width" : String(dim_x + 30),
         "height" : String(dim_y + 30)
     })
+    
     for (var i = 0; i < size_x * size_y; i++){
         $('#field_container').append(`
         <img src="Assets/Empty_square3dd.png" id=${i} ">
