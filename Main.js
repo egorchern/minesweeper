@@ -2,6 +2,13 @@ var size_x = 0;
 var size_y = 0;
 var mine_count = 0;
 var field = [];
+var firstClick = true;
+var mine_locations = [];
+var visited_nodes = [];
+
+
+
+
 $(function(){
     $('#field_select_dropdown > div > button').click(function(){
         process_field_choice(this.id);
@@ -24,15 +31,15 @@ $(function(){
                     configure_and_display_field();
                 }
                 else{
-                    alert("Mine count is too big for the chosen field")
+                    alert("Mine count is too big for the chosen field");
                 }
             }
             else{
-                alert("Fields can only contain positive integers")
+                alert("Fields can only contain positive integers");
             }
         }
         else{
-            alert("Fields can only contain positive integers less than 100")
+            alert("Fields can only contain positive integers less than 100");
         }
         
         
@@ -40,6 +47,33 @@ $(function(){
     })
     
 })
+function visited_nodes_includes(coord)
+{
+    for (var i = 0; i < visited_nodes.length; i++)
+    {
+        var current_coord = visited_nodes[i];
+        if (coord[0] === current_coord[0] && coord[1] === current_coord[1])
+        {
+            return true;
+        }
+        
+    }
+    return false;
+}
+
+function mine_field_includes(coord)
+{
+    for (var i = 0; i < mine_locations.length; i++)
+    {
+        var current_coord = mine_locations[i];
+        if (coord[0] === current_coord[0] && coord[1] === current_coord[1])
+        {
+            return true;
+        }
+        
+    }
+    return false;
+}
 
 function process_field_choice(callerId){
     if(callerId === "4"){
@@ -92,17 +126,254 @@ function configure_and_display_field(){
         "height" : String(dim_y + 30)
     })
     
-    for (var i = 0; i < size_x * size_y; i++){
-        $('#field_container').append(`
-        <img src="Assets/Empty_square3dd.png" id=${i} ">
-        `);
+    for(var y = 0; y < size_y; y++)
+    {
+        for(var x = 0; x < size_x; x++)
+        {
+            $('#field_container').append(
+            `
+            <img src="Assets/Empty_square3dd.png" id='${y}_${x}'>
+            `
+            );
+        }
     }
+        
+    
     $('#field_container img').hover(function(){
         $('#' + this.id).attr("src","Assets/disabled_square.png")
         
     }, function(){
         $('#' + this.id).attr("src","Assets/Empty_square3dd.png")
     })
+    $('#field_container img').click(function(){
+        processClick(this.id);
+    });
+    $('#field_container img').on('contextmenu', function(ev){
+        ev.preventDefault();
+        var source = $(`#${this.id}`).attr("src");
+        console.log(source);
+        if (source === "Assets/disabled_square.png")
+        {
+            $(`#${this.id}`).off('click');
+            $(`#${this.id}`).off('mouseenter');
+            $(`#${this.id}`).off('mouseleave');
+            $(`#${this.id}`).attr('src',"Assets/unclicked_square_flagged.png");
+        }
+        else if(source === "Assets/unclicked_square_flagged.png")
+        {
+            
+            $(`#${this.id}`).click(function(){
+                processClick(this.id);
+            })
+            $(`#${this.id}`).hover(function()
+                {
+                
+                $('#' + this.id).attr("src","Assets/disabled_square.png")
+
+                }, function(){
+                
+                $('#' + this.id).attr("src","Assets/Empty_square3dd.png")
+                
+                })
+            $(`#${this.id}`).attr("src", "Assets/Empty_square3dd.png");
+        }
+        
+    });
     $('#field_container_background').css("display","flex");
     
+}
+
+function processClick (callerId)
+{
+    
+    var y = Number(/^\d+/.exec(callerId)[0]);
+    var x = Number(/\d+$/.exec(callerId)[0]);
+    
+    
+    if(firstClick === true)
+    {
+        mine_locations = [[y, x]];
+        if(y - 1 > -1 && x - 1 > -1)
+        {
+            mine_locations.push([y - 1, x - 1])
+        }
+        if(y + 1 < size_y && x - 1 > -1)
+        {
+            mine_locations.push([y + 1, x - 1])
+        }
+        if(y - 1 > -1 && x + 1 < size_x)
+        {
+            mine_locations.push([y - 1, x + 1])
+        }
+        if(y + 1 < size_y && x + 1 < size_x)
+        {
+            mine_locations.push([y + 1, x + 1])
+        }
+        if(y - 1 > -1)
+        {
+            mine_locations.push([y - 1, x])
+        }
+        if(y + 1 < size_y)
+        {
+            mine_locations.push([y + 1, x])
+        }
+        if(x + 1 < size_x)
+        {
+            mine_locations.push([y, x + 1])
+        }
+        if(x - 1 > -1)
+        {
+            mine_locations.push([y, x - 1])
+        }
+        
+        for (var i = 0; i < mine_count; i++)
+        {
+            var rand_y = randomInteger(0, size_y - 1);
+            var rand_x = randomInteger(0, size_x - 1);
+            var coord = [rand_y, rand_x];
+            
+            while(mine_field_includes(coord) === true)
+            {
+                
+                rand_y = randomInteger(0, size_y - 1);
+                rand_x = randomInteger(0, size_x - 1);
+                coord = [rand_y, rand_x];
+            }
+            mine_locations.push(coord);
+            
+            field[rand_y][rand_x] = 2;
+            
+        }
+        reveal_around(y, x);
+        firstClick = false;
+        
+        
+    }
+    else
+    {
+        if(field[y][x] == 2)
+        {
+            reveal_mines(y, x);
+            $('#field_container img').off();
+            alert("You stepped on the mine!")
+        }
+        else
+        {
+            reveal_around(y, x);
+        }
+    }
+}
+
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function adjecent_mine_count(y, x)
+{
+    var counter = 0;
+    if(field[y][x] == 2)
+    {
+        return -1;
+    }
+    if(y - 1 > -1 && x - 1 > -1 && field[y - 1][x - 1] == 2)
+    {
+        counter += 1;
+    }
+    if(y + 1 < size_y && x - 1 > -1 && field[y + 1][x - 1] == 2)
+    {
+        counter += 1;
+    }
+    if(y - 1 > -1 && x + 1 < size_x && field[y - 1][x + 1] == 2)
+    {
+        counter += 1;
+    }
+    if(y + 1 < size_y && x + 1 < size_x && field[y + 1][x + 1] == 2)
+    {
+        counter += 1;
+    }
+    if(y - 1 > -1 && field[y - 1][x] == 2)
+    {
+        counter += 1;
+    }
+    if(y + 1 < size_y && field[y + 1][x] == 2)
+    {
+        counter += 1;
+    }
+    if(x + 1 < size_x && field[y][x + 1] == 2)
+    {
+        counter += 1;
+    }
+    if(x - 1 > -1 && field[y][x - 1] == 2)
+    {
+        counter += 1;
+    }
+    return counter;
+}
+
+function reveal_around(y, x)
+{
+    visited_nodes.push([y, x]);
+    var adjecentMines = adjecent_mine_count(y, x);
+    
+    if(adjecentMines > 0)
+    {
+            
+        $(`#${y}_${x}`).attr("src",`Assets/disabled_square_${adjecentMines}.png`);
+        $(`#${y}_${x}`).off();
+        
+            
+    }
+    else if(adjecentMines == 0)
+    {
+        $(`#${y}_${x}`).attr("src",`Assets/disabled_square.png`);
+        $(`#${y}_${x}`).off();
+        
+        if(y - 1 > -1 && x - 1 > -1 && visited_nodes_includes([y - 1, x - 1]) === false)
+        {
+            reveal_around(y - 1, x - 1);
+        }
+        if(y + 1 < size_y && x - 1 > -1 && visited_nodes_includes([y + 1, x - 1]) === false )
+        {
+            reveal_around(y + 1, x - 1);
+        }
+        if(y - 1 > -1 && x + 1 < size_x && visited_nodes_includes([y - 1, x + 1]) === false)
+        {
+            reveal_around(y - 1, x + 1);
+        }
+        if(y + 1 < size_y && x + 1 < size_x && visited_nodes_includes([y + 1, x + 1]) === false)
+        {
+            
+            reveal_around(y + 1, x + 1);
+        }
+        if(y - 1 > -1 && visited_nodes_includes([y - 1, x]) === false)
+        {
+            reveal_around(y - 1, x);
+        }
+        if(y + 1 < size_y && visited_nodes_includes([y + 1, x]) === false)
+        {
+            reveal_around(y + 1, x - 1);
+        }
+        if(x + 1 < size_x && visited_nodes_includes([y, x + 1]) === false)
+        {
+            reveal_around(y, x + 1);
+        }
+        if(x - 1 > -1 && visited_nodes_includes([y , x - 1]) === false)
+        {
+            reveal_around(y, x - 1);
+        }
+    }
+                
+}
+function reveal_mines(y, x)
+{
+    for(var y = 0; y < size_y; y++)
+    {
+        for(var x = 0; x < size_x; x++)
+        {
+            if(field[y][x] == 2)
+            {
+                $(`#${y}_${x}`).attr("src", "Assets/square_unclicked_bomb.png");
+            }
+        }
+    }
 }
