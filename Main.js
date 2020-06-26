@@ -5,7 +5,9 @@ var field = [];
 var firstClick = true;
 var mine_locations = [];
 var visited_nodes = [];
-
+var time_elapsed = 0;
+var timer;
+var flags_placed = 0;
 
 
 
@@ -74,7 +76,11 @@ function mine_field_includes(coord)
     }
     return false;
 }
-
+function update_time_elapsed()
+{
+    time_elapsed += 1;
+    $('#time').html(String(time_elapsed));
+}
 function process_field_choice(callerId){
     if(callerId === "4"){
         $('.modall').css("display","flex")
@@ -105,6 +111,9 @@ function process_field_choice(callerId){
 
 function configure_and_display_field(){
     $('#field_select_dropdown').remove();
+    $('#mines').html(String(mine_count));
+    timer = setInterval(update_time_elapsed, 1000);
+    $('#timer_and_flag_container').css("display","flex");
     for(var y = 0; y < size_y; y++){
         var currentRow = [];
         for (var x = 0; x < size_x; x++){
@@ -158,6 +167,8 @@ function configure_and_display_field(){
             $(`#${this.id}`).off('mouseenter');
             $(`#${this.id}`).off('mouseleave');
             $(`#${this.id}`).attr('src',"Assets/unclicked_square_flagged.png");
+            flags_placed += 1;
+            
         }
         else if(source === "Assets/unclicked_square_flagged.png")
         {
@@ -176,7 +187,10 @@ function configure_and_display_field(){
                 
                 })
             $(`#${this.id}`).attr("src", "Assets/Empty_square3dd.png");
+            flags_placed -= 1;
+            
         }
+        $('#flags').html(String(flags_placed));
         
     });
     $('#field_container_background').css("display","flex");
@@ -253,13 +267,24 @@ function processClick (callerId)
     {
         if(field[y][x] == 2)
         {
+            clearInterval(timer);
+            var audio = new Audio('Assets/explosion.wav');
+            audio.play();
             reveal_mines(y, x);
+            
             $('#field_container img').off();
-            alert("You stepped on the mine!")
+            
         }
         else
         {
             reveal_around(y, x);
+            var game_state = check_win_condition();
+            if (game_state === true)
+            {
+                clearInterval(timer);
+                $('#field_container img').off();
+                alert("You won!");
+            }
         }
     }
 }
@@ -376,4 +401,23 @@ function reveal_mines(y, x)
             }
         }
     }
+}
+
+function check_win_condition() // false - game still in process, true - game won 
+{
+    for(var y = 0; y < size_y; y++)
+    {
+        for(var x = 0; x < size_x; x++)
+        {
+            if(field[y][x] != 2)
+            {
+                if(visited_nodes_includes([y, x]) === false)
+                {
+                    return false;
+                }
+            }
+            
+        }
+    }
+    return true;
 }

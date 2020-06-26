@@ -12,7 +12,7 @@
         
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         <script type = "text/javascript" src="Main.js"></script>
-        <link rel="icon" href="http://minesweeperonline.com/favicon.ico">
+        <link rel="icon" href="Assets/favicon.ico">
         <title>Minesweeper</title>
     </head>
     <body>
@@ -59,7 +59,18 @@
                 
             </div>
         </div>
-        <div class="horizontalAlign" id="game_container" style="margin-top:15vh; margin-bottom: 15vh;">
+        <div class="horizontalAlign" id="timer_and_flag_container">
+            <div id="flag_and_mine_grid">
+                <div class="flag_and_mine_grid_item"><p>Flags</p></div>
+                <div class="flag_and_mine_grid_item"><p>Mines</p></div>
+                <div class="flag_and_mine_grid_item"><p>Time elapsed</p></div>
+                <div class="flag_and_mine_grid_item"><p id="flags">0</p></div>
+                <div class="flag_and_mine_grid_item"><p id="mines">0 </p></div>
+                <div class="flag_and_mine_grid_item"><p id="time">0 </p></div>
+            </div>
+            
+        </div>
+        <div class="horizontalAlign" id="game_container" >
             <div id="field_container_background" class="horizontalAlign">
             
             <div id="field_container">

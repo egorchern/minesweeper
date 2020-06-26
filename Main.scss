@@ -129,6 +129,30 @@ body {
     background-repeat: repeat;
     
     display:none;
-     animation-name: zoom;
+    animation-name: zoom;
     animation-duration: 0.5s;
 }
+
+#flag_and_mine_grid {
+    display:grid;
+    
+    
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 2.2vw;
+    font-size: calc(16px + 0.75vw);
+    color:hsl(230, 76%, 30%);
+}
+
+#timer_and_flag_container {
+    display:none;
+    margin-top:12vh;
+    margin-bottom: 4vh;
+    animation-name: zoom;
+    animation-duration: 0.5s;
+}
+
+.flag_and_mine_grid_item {
+    text-align: center;
+}
+
+

@@ -106,4 +106,24 @@ body {
   animation-duration: 0.5s;
 }
 
+#flag_and_mine_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 2.2vw;
+  font-size: calc(16px + 0.75vw);
+  color: #122687;
+}
+
+#timer_and_flag_container {
+  display: none;
+  margin-top: 12vh;
+  margin-bottom: 4vh;
+  animation-name: zoom;
+  animation-duration: 0.5s;
+}
+
+.flag_and_mine_grid_item {
+  text-align: center;
+}
+
 /*# sourceMappingURL=Main.css.map */
