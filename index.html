@@ -17,7 +17,7 @@
     </head>
     <body>
         
-        <div class="btn-group" id="field_select_dropdown">
+        <div class="btn-group shadow-pulse" id="field_select_dropdown">
               <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 2rem">
                 Choose the field!
               </button>
@@ -29,7 +29,9 @@
                 
               </div>
         </div>
-        
+        <div id='help_icon' class="blue-pulse" onclick="display_help_modal()">
+            <img src="Assets/help_icon.png" id="help_img" >
+        </div>
         <div class="modall">
             
             <div class="modall-content">
@@ -46,7 +48,7 @@
                       </div>
                       <div class="form-group">
                           
-                        <input type="text" class="form-control" id="mine_count" placeholder="Mine count (max: width * height)">
+                        <input type="text" class="form-control" id="mine_count" placeholder="Mine count (max: width * height - 8)">
                         
                       </div>
                       <div class="horizontalAlign">
@@ -68,6 +70,9 @@
                 <div class="flag_and_mine_grid_item"><p id="mines">0 </p></div>
                 <div class="flag_and_mine_grid_item"><p id="time">0 </p></div>
             </div>
+            
+        </div>
+        <div id="alertMessageContainer" class="horizontalAlign">
             
         </div>
         <div class="horizontalAlign" id="game_container" >

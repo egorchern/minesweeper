@@ -9,7 +9,17 @@ var time_elapsed = 0;
 var timer;
 var flags_placed = 0;
 
+function display_help_modal()
+{
+    $('#help_icon').removeClass("blue-pulse");
+    $('.modall-content').empty();
+    $('.modall-content').append(
+        `
 
+        `
+    )
+    $('.modall').css("display","flex");
+}
 
 $(function(){
     $('#field_select_dropdown > div > button').click(function(){
@@ -23,7 +33,7 @@ $(function(){
         
         var pattern = /^[1-9][0-9]?$/;
         if(pattern.test(x) === true && pattern.test(y) === true){
-            var max_mines = Number(x) * Number(y);
+            var max_mines = Number(x) * Number(y) - 8;
             if (/^[1-9][0-9]*$/.test(mines) == true){
                 if(Number(mines) <= max_mines){
                     size_x = Number(x);
@@ -81,7 +91,9 @@ function update_time_elapsed()
     time_elapsed += 1;
     $('#time').html(String(time_elapsed));
 }
-function process_field_choice(callerId){
+function process_field_choice(callerId)
+{
+    
     if(callerId === "4"){
         $('.modall').css("display","flex")
     }
@@ -283,7 +295,14 @@ function processClick (callerId)
             {
                 clearInterval(timer);
                 $('#field_container img').off();
-                alert("You won!");
+                $('#alertMessageContainer').append(`
+                    <div class="alert alert-success fade show" role="alert" id="bookmarkAlert" style="width:100%;margin:auto;margin-top:10px;max-width:600px;">
+                        You have successfully minesweeped a <strong>${size_x} x ${size_y}</strong> field with <strong<${mine_count}</strong> mines. It took you <strong>${time_elapsed}</strong> seconds!
+                    </div>
+
+                `);
+                $('#timer_and_flag_container').hide();
+                $('#alertMessageContainer').show();
             }
         }
     }

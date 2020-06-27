@@ -24,6 +24,8 @@
     display:block;
     width: 75%;
     max-width: 400px;
+    
+    border-radius: 10px;
     margin: auto;
     margin-top: 20vh;
     button{
@@ -91,6 +93,24 @@ body {
     from {transform:scale(0)}
     to {transform:scale(1)}
 }
+@keyframes shadow-pulse
+{
+     0% {
+          box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+     }
+     100% {
+          box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+     }
+}
+@keyframes blue-pulse
+{
+     0% {
+          box-shadow: 0 0 0 0px rgba(0, 92, 230, 0.2)
+     }
+     100% {
+          box-shadow: 0 0 0 35px rgba(0, 92, 230, 0);
+     }
+}
 .close{
     position:fixed;
     top:15px;
@@ -145,7 +165,7 @@ body {
 
 #timer_and_flag_container {
     display:none;
-    margin-top:12vh;
+    margin-top:10vh;
     margin-bottom: 4vh;
     animation-name: zoom;
     animation-duration: 0.5s;
@@ -156,3 +176,44 @@ body {
 }
 
 
+
+#alertMessageContainer {
+    width:100%;
+    display:none;
+    margin-top:10vh;
+    margin-bottom: 4vh;
+}
+
+#game_container {
+    margin-bottom: 4vh;
+}
+
+#help_icon {
+    position:fixed;
+    top:1vh;
+    left:1vw;
+    width:calc(40px + 1vw);
+    height:auto;
+    border-radius: 50px;
+    
+}
+
+
+
+#help_img {
+    width:100%;
+    
+    object-fit: fill;
+}
+
+.dropdown-menu {
+    
+}
+
+.blue-pulse:hover {
+    animation: blue-pulse 0.7s infinite;
+}
+
+.shadow-pulse {
+    animation: shadow-pulse 0.9s infinite;
+}
