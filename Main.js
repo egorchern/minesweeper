@@ -26,7 +26,7 @@ function display_help_modal()
         `
             <p style = 'font-size: 2rem'>Minesweeper manual</p>
             <p style = 'font-size: 1.1rem'>The aim of the game is to reveal all cells that don't have mines on them. If you reveal (click) on a cell that has a mine on it, you lose the game. If a revealed cell is adjacent to an unrevealed cell with a mine, that revealed cell will have a number that corresponds to a number of unrevealed cells with mines around that cell. See the picture below for practical example</p>
-            <img src='Assets/Example_1.png' style='width:65%; max-width:400px'>
+            <img src='Assets/example_1.png' style='width:65%; max-width:400px'>
             <p style = 'font-size: 1.1rem; margin-top:10px;'>If you look at the the cell highlighted in blue, it has a number 3 written in it. This means that there are <strong>exactly</strong> 3 mines around that cell. Since there are only 3 unrevealed cells adjacent to the blue highlighted cell, that means that those 3 cells all have mines on them. </p>
             <p style = 'font-size: 1.1rem;'>You can reveal a cell by left-clicking on that cell. Don't worry about clicking on a mine on your first click. The mines are only placed after the first click</p>
             <img src='Assets/left-click-reveal.gif' style='width:65%; max-width:400px'>
