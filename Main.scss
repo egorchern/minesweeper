@@ -36,7 +36,9 @@
         width:100%;
     }
 }
-
+p{
+    word-break: keep-all;
+}
 body {
   margin:0;
   
@@ -45,6 +47,23 @@ body {
   background-color: hsl(0%, 0%, 99.5%);
   
 
+}
+.close{
+    position:fixed;
+    top:15px;
+    right:20px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+
+.close:hover, .close:focus{
+    color:#bbb;
+    text-decoration: none;
+    cursor:pointer;
+    
 }
 .modall {
     
@@ -67,19 +86,20 @@ body {
 
 .modall-content {
     margin-top:20vh;
-   
+    margin-bottom:20vh;
     width: 80%;
     max-width:500px;
     background-color: white;
-    
+    padding:20px;
     border-radius: 20px;
     animation-name: zoom;
     animation-duration: 0.5s;
+    
     input{
         font-size:1.5rem;
     }
     form{
-        padding:20px;
+        
         button{
             font-size:1.5rem;
             width: 150px;
