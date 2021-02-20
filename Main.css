@@ -175,6 +175,7 @@ body {
 
 #help_icon {
   position: fixed;
+  cursor: pointer;
   top: 1vh;
   left: 1vw;
   width: calc(40px + 1vw);
